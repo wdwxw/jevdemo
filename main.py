@@ -73,7 +73,7 @@ def list_models(client: TypeSafeClient) -> None:
     )
 
 
-def evaluate(client: TypeSafeClient, state: str) -> None:
+def evaluate_api(client: TypeSafeClient, state: str) -> dict[str, Any]:
     result = client.system_one(
         state=state,
         questions={
@@ -103,8 +103,8 @@ def evaluate(client: TypeSafeClient, state: str) -> None:
         },
     )
 
-    # 输出服务端原始 JSON，便于看到概率、置信度、实际模型版本和 token 用量。
-    print_json(result.raw_http_response.json())
+    # 使用原始 JSON 让 CLI 和网页都能看到完整的概率、置信度与 token 用量。
+    return result.raw_http_response.json()
 
 
 def main() -> int:
@@ -116,7 +116,7 @@ def main() -> int:
             if args.list_models:
                 list_models(client)
             else:
-                evaluate(client, args.state)
+                print_json(evaluate_api(client, args.state))
     except Exception as error:
         print(f"TypeSafe API 调用失败：{error}", file=sys.stderr)
         return 1

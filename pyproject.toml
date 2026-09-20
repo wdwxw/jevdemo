@@ -4,6 +4,8 @@ version = "0.1.0"
 description = "Minimal Python test client for the TypeSafe System One API"
 requires-python = ">=3.10"
 dependencies = [
+    "fastapi",
     "python-dotenv",
     "typesafe-sdk",
+    "uvicorn[standard]",
 ]

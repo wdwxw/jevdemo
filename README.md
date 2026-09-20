@@ -28,6 +28,40 @@ TYPESAFE_DEFAULT_MODEL=jev-latest
 
 ## 运行
 
+### 可视化 HTTP Demo
+
+启动本地服务：
+
+```bash
+uv run uvicorn web_app:app --host 127.0.0.1 --port 8000
+```
+
+浏览器打开：
+
+```text
+http://127.0.0.1:8000
+```
+
+页面提供三个可直接点击的客服示例，也可以粘贴自己的内容，并可增加一个自定义“是/否”问题。服务端一次调用同时演示：
+
+- `Choice`：请求应该路由到哪个部门。
+- `Score`：客户挫败程度。
+- `Noul`：请求是否紧急。
+- 可选自定义 `Noul`：例如“是否应该升级给人工主管？”
+
+结果页面显示结论、概率分布、置信度、实际模型版本、Token 用量和原始 JSON。API Key 只由后端从 `.env` 读取，不会发送到浏览器。
+
+HTTP 接口：
+
+```text
+GET  /
+GET  /api/presets
+POST /api/evaluate
+GET  /docs
+```
+
+### 命令行测试
+
 用内置客服工单示例发起一次请求：
 
 ```bash
